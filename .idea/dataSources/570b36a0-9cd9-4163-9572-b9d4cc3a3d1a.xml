@@ -100,7 +100,19 @@
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="29" parent="7">
+    <column id="29" parent="7" name="password_digest">
+      <Position>5</Position>
+      <DataType>varchar|0</DataType>
+    </column>
+    <column id="30" parent="7" name="access_token">
+      <Position>6</Position>
+      <DataType>varchar|0</DataType>
+    </column>
+    <index id="31" parent="7" name="index_users_on_email">
+      <ColNames>email</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="32" parent="7">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>

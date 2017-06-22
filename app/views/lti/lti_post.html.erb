@@ -1,0 +1,18 @@
+<% provide(:title, "LTI") %>
+<div class="container">
+  <div class="panel panel-primary">
+    <!-- Default panel contents -->
+    <div class="panel-heading">LTI Launch Parameters</div>
+
+    <!-- List group -->
+    <ul class="list-group">
+      <% @request_params.each_key do |param| %>
+          <li class="list-group-item"><%= param %>: <em><%= @request_params[param] %></em></li>
+      <% end %>
+      <li class="list-group-item">Nonce is valid: <em class="pull-right"><%= @nonce_isvalid %></em></li>
+      <li class="list-group-item">Time stamp is valid: <em class="pull-right"><%= @timestamp_isvalid %></em></li>
+      <li class="list-group-item">Signature is valid: <em class="pull-right"><%= @signature_isvalid %></em></li>
+    </ul>
+
+  </div>
+</div>
