@@ -5,6 +5,14 @@
       <h1>
         <%= @user.name %>
       </h1>
+      <div>
+        <ul>
+          <li><%= @user.id %></li>
+          <li><%= @user.email %></li>
+          <li><%= logged_in? %></li>
+          <li><%= session[:user_id] %></li>
+        </ul>
+      </div>
     </section>
   </aside>
 </div>

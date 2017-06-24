@@ -19,5 +19,8 @@ Rails.application.routes.draw do
 
   post    '/check-nonce', to: 'lti#check_nonce'
 
+  get     '/generate-string', to: 'lti#generate_string'
+  post     '/generate-string', to: 'lti#generate_string'
+
   resources :users
 end
