@@ -10,9 +10,11 @@
           <li><%= @user.id %></li>
           <li><%= @user.email %></li>
           <li><%= logged_in? %></li>
-          <li><%= session[:user_id] %></li>
+          <li>Session id: <%= session[:user_id] %></li>
+          <li>Access Token: <%= current_user.access_token %></li>
         </ul>
       </div>
+      <a href="#" class="btn btn-primary" role="button">Get Started</a>
     </section>
   </aside>
 </div>

@@ -2,7 +2,7 @@ class LtiController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def lti_get
-    flash.now[:danger] = 'Opssss! This is not an LTI launch... Are you doing something wrong?!'
+    flash.now[:danger] = 'Opssss! This is not an LTI launch.'
   end
 
   def lti_post
@@ -14,9 +14,7 @@ class LtiController < ApplicationController
       @user = user_exists?(request.request_parameters['lis_person_contact_email_primary'])
 
       if @user
-        session[:user_id] = @user.id
-        flash[:success] = "Hello #{@user.name}, Welcome to the Grade Export App!"
-        redirect_to @user
+        login_user(@user, "Hello #{@user.name}, Welcome back to the Grade Export App!")
       else
         random_secure_string = SecureRandom.hex(10)
         @request_params = request.request_parameters
@@ -25,11 +23,7 @@ class LtiController < ApplicationController
                          password: random_secure_string,
                          password_confirmation: random_secure_string)
         if @user.save
-          # log_in @user
-          logger.info "User id ******************** #{@user.id}"
-          session[:user_id] = @user.id
-          flash[:success] = "Welcome to the Grade Export App!"
-          redirect_to @user
+          login_user(@user, "Hello #{@user.name}, Welcome to the Grade Export App!")
         else
           render 'users/new'
         end
@@ -82,6 +76,12 @@ class LtiController < ApplicationController
 
   def user_exists?(email)
     @user = User.find_by(email: email)
+  end
+
+  def login_user(user, message)
+    session[:user_id] = user.id
+    flash[:success] = message
+    redirect_to user
   end
 
 end
