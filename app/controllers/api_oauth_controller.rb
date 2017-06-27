@@ -23,6 +23,7 @@ class ApiOauthController < ApplicationController
 
     #@access_token = request.query_parameters['access_token']
     current_user.update_attribute(:access_token, json_response['access_token'])
+    current_user.update_attribute(:refresh_token, json_response['refresh_token'])
 
     render plain: "Access Token is: #{json_response['access_token']}
                     #{json_response}
@@ -35,7 +36,7 @@ class ApiOauthController < ApplicationController
         :grant_type     => 'refresh_token',
         :client_id      => '10000000000003',
         :client_secret  => 'NlGNuLRz9g3fxHQ3jDR4SA4TK8jW39KfHXvwstaO5Am9Gi8rtyLBHXeB7Aw0DcMj',
-        :refresh_token  => 'sahzvKe3PawVX02cC3qMWvTCCbn7EHqVUt9VJE8b3eUGsdCNZPmNhZHOshT1vE5O',
+        :refresh_token  => current_user.refresh_token,
     }
     response = Net::HTTP.post_form(uri, params)
     json_response = JSON.parse(response.body)

@@ -108,11 +108,15 @@
       <Position>6</Position>
       <DataType>varchar|0</DataType>
     </column>
-    <index id="31" parent="7" name="index_users_on_email">
+    <column id="31" parent="7" name="refresh_token">
+      <Position>7</Position>
+      <DataType>varchar|0</DataType>
+    </column>
+    <index id="32" parent="7" name="index_users_on_email">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="32" parent="7">
+    <key id="33" parent="7">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
