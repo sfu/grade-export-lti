@@ -1,4 +1,6 @@
 class ApiOauthController < ApplicationController
+  before_action :logged_in_user, only: [:show]
+  before_action :correct_user,   only: [:show]
 
   def start
     # uri = 'http://web.canvaslms.docker/login/oauth2/auth?client_id=10000000000003&response_type=code&redirect_uri=http://0.0.0.0:3001/get-token'

@@ -29,7 +29,8 @@ Rails.application.routes.draw do
   get     '/canvas_api_get',  to: 'api_oauth#canvas_api_get'
   get     '/refresh-token',   to: 'api_oauth#refresh_token'
 
-  get 'grade_export/view'
+  get 'grade_export/courses', to: 'grade_export#courses'
+  get 'grade_export/courses/:id', to: 'grade_export#grades'
   get 'grade_export/export'
 
   resources :users

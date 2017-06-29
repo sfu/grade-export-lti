@@ -1,0 +1,15 @@
+<% provide(:title, 'View Grades') %>
+
+<div class="container">
+  <div class="row">
+    <ul>
+      <% @json_response.each do |enrollment| %>
+          <% if enrollment['type'] == 'StudentEnrollment' %>
+              <li> <%= enrollment['user']['name'] %> </li>
+          <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<p> <%= @json_response %> </p>
