@@ -14,7 +14,9 @@
           <li>Access Token: <%= current_user.access_token %></li>
         </ul>
       </div>
-      <a href="#" class="btn btn-primary" role="button">Get Started</a>
     </section>
   </aside>
+</div>
+<div class="row">
+  <div class="center"><%= link_to "Get Started!", oauth_start_path, class: "btn btn-lg btn-primary" %></div>
 </div>

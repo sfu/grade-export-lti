@@ -1,0 +1,19 @@
+<% provide(:title, 'View Courses') %>
+
+<div class="container">
+    <div class="row">
+      <% @json_response.each do |course| %>
+        <div class="col-sm-4 col-md-3">
+          <div class="thumbnail">
+
+            <div class="caption">
+              <h3><%= course['name'] %><br></h3>
+              <p>...</p>
+              <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+</div>
+

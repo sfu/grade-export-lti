@@ -1,4 +1,5 @@
 class LtiController < ApplicationController
+
   skip_before_action :verify_authenticity_token
 
   def lti_get
@@ -25,7 +26,10 @@ class LtiController < ApplicationController
         if @user.save
           login_user(@user, "Hello #{@user.name}, Welcome to the Grade Export App!")
         else
-          render 'users/new'
+          flash.now[:danger] = 'Oooops!..... Could not create user!'
+          logger.debug @user.errors.full_messages
+          render 'shared/error'
+          #render 'users/new'
         end
       end
     else
