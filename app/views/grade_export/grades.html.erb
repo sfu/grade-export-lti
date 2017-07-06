@@ -1,15 +1,40 @@
 <% provide(:title, 'View Grades') %>
 
-<div class="container">
-  <div class="row">
-    <ul>
-      <% @json_response.each do |enrollment| %>
-          <% if enrollment['type'] == 'StudentEnrollment' %>
-              <li> <%= enrollment['user']['name'] %> </li>
-          <% end %>
-      <% end %>
-    </ul>
-  </div>
+<div class="panel panel-primary">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Grade Report</div>
+  <!-- Table -->
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Course</th>
+      <th>Section</th>
+      <th>Full Name</th>
+      <th>Student Id</th>
+      <th>Final Score</th>
+      <th>Final Grade</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @json_response.each do |enrollment| %>
+        <% if enrollment['type'] == 'StudentEnrollment' %>
+            <tr>
+              <td>
+                <%= extract_details(enrollment['sis_section_id'], CourseDetail::SUBJECT).upcase %>
+                <%= extract_details(enrollment['sis_course_id'], CourseDetail::NUMBER).upcase %>
+              </td>
+              <td><%= extract_details(enrollment['sis_course_id'], CourseDetail::SECTION).upcase %></td>
+              <td><%= enrollment['user']['name'] %></td>
+              <td><%= enrollment['user']['sis_user_id'] %></td>
+              <td><%= enrollment['grades']['final_score'] %></td>
+              <td><%= enrollment['grades']['final_grade'] %></td>
+            </tr>
+        <% end %>
+    <% end %>
+    </tbody>
+  </table>
 </div>
 
-<p> <%= @json_response %> </p>
+<% @json_response.each do |enrollment| %>
+    <p><%= enrollment%></p>
+<% end %>

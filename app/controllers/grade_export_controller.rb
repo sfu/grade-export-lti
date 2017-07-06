@@ -9,8 +9,11 @@ class GradeExportController < ApplicationController
     #path for enrollments: /api/v1/courses/3/enrollments
     uri = URI::HTTP.build(host: 'web.canvaslms.docker', path: '/api/v1/courses/', query: parameters.to_query)
     response = Net::HTTP.get_response(uri)
-    @json_response = JSON.parse(response.body)
-    # render plain: @json_response
+    if response.code == NOT_AUTHORIZED
+      redirect_to current_user
+    else
+      @json_response = JSON.parse(response.body)
+    end
   end
 
   def grades
@@ -20,9 +23,17 @@ class GradeExportController < ApplicationController
     #path for enrollments: /api/v1/courses/3/enrollments
     uri = URI::HTTP.build(host: 'web.canvaslms.docker', path: "/api/v1/courses/#{params[:id]}/enrollments", query: parameters.to_query)
     response = Net::HTTP.get_response(uri)
-    @json_response = JSON.parse(response.body)
+    if response.code == NOT_AUTHORIZED
+      redirect_to current_user
+    else
+      @json_response = JSON.parse(response.body)
+    end
   end
 
   def export
+    render plain: extract_details('1151-cmpt-310-e100', CourseDetail::TERM)
   end
+
+  private
+
 end

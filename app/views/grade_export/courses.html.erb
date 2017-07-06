@@ -1,13 +1,24 @@
 <% provide(:title, 'View Courses') %>
 
 <div class="container">
+  <h3>Your Courses:</h3>
+  <br>
   <div class="row">
-    <ul>
-      <% @json_response.each do |course| %>
-          <li> <%= course['name'] %> </li>
-      <% end %>
-    </ul>
+    <% @json_response.each do |course| %>
+        <div class="col-sm-6 col-md-4">
+          <div class="thumbnail">
+            <%= link_to image_tag("course_cover.svg", alt: "Rails logo"), 'http://rubyonrails.org/' %>
+            <div class="caption">
+              <h3> <%= course['name'] %> </h3>
+              <p></p>
+              <p><%= link_to "View Grades", grades_path(course['id']), class: "btn btn-default" %> <%= link_to "Export Grades", root_path, class: "btn btn-primary" %></p>
+            </div>
+          </div>
+        </div>
+    <% end %>
   </div>
 </div>
+
+
 
 <p> <%= @json_response %> </p>
