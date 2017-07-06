@@ -27,7 +27,8 @@ class ApiOauthController < ApplicationController
     current_user.update_attribute(:access_token, json_response['access_token'])
     current_user.update_attribute(:refresh_token, json_response['refresh_token'])
 
-    redirect_to current_user
+    redirect_to courses_path
+    #redirect_to current_user
     # render plain: "Access Token is: #{json_response['access_token']}
     #                 #{json_response}"
   end
