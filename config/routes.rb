@@ -30,9 +30,11 @@ Rails.application.routes.draw do
   get     '/canvas_api_post', to: 'api_oauth#canvas_api_post'
   get     '/refresh-token',   to: 'api_oauth#refresh_token'
 
-  get '/courses', to: 'grade_export#courses'
-  get '/courses/:id', to: 'grade_export#grades', as: 'grades'
-  get 'grade_export/export'
+  get     '/courses',         to: 'grade_export#courses'
+  get     '/courses/:id',     to: 'grade_export#grades', as: 'grades'
+  get     '/export/:id',      to: 'grade_export#export', as: 'export'
+
+  #get 'grade_export/export'
 
   resources :users
 end

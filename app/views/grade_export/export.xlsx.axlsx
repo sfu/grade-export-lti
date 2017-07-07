@@ -1,0 +1,13 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Enrollments") do |sheet|
+  @json_response.each do |enrollment|
+    sheet.add_row [
+                    extract_details(enrollment['sis_course_id'], CourseDetail::SUBJECT).upcase,
+                    extract_details(enrollment['sis_course_id'], CourseDetail::NUMBER).upcase,
+                    extract_details(enrollment['sis_course_id'], CourseDetail::SECTION).upcase,
+                    enrollment['user']['sis_user_id'],
+                    enrollment['grades']['final_grade'],
+                    enrollment['user']['name']
+                  ]
+  end
+end

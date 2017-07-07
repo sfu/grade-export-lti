@@ -1,2 +1,2 @@
-<h1>GradeExport#export</h1>
-<p>Find me in app/views/grade_export/export.html.erb</p>
+<% provide(:title, 'Export Grades') %>
+<%= link_to 'Download as .xlsx', export_path(format: :xlsx) %>

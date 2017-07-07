@@ -11,7 +11,7 @@
             <div class="caption">
               <h3> <%= course['name'] %> </h3>
               <p></p>
-              <p><%= link_to "View Grades", grades_path(course['id']), class: "btn btn-default" %> <%= link_to "Export Grades", root_path, class: "btn btn-primary" %></p>
+              <p><%= link_to "View Grades", grades_path(course['id']), class: "btn btn-default" %> <%= link_to "Export Grades", export_path(course['id'], format: :xlsx), class: "btn btn-primary" %></p>
             </div>
           </div>
         </div>
