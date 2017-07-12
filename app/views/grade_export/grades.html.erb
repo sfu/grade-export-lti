@@ -16,7 +16,7 @@
     </tr>
     </thead>
     <tbody>
-    <% @json_response.each do |enrollment| %>
+    <% @enrollments.each do |enrollment| %>
         <% if enrollment['type'] == 'StudentEnrollment' %>
             <tr>
               <td>
@@ -35,6 +35,6 @@
   </table>
 <!-- </div> -->
 
-<% @json_response.each do |enrollment| %>
+<% @enrollments.each do |enrollment| %>
     <p><%= enrollment%></p>
 <% end %>

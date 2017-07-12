@@ -54,12 +54,17 @@ class LtiController < ApplicationController
 
   def valid_nonce?(nonce, timeStamp)
     keep_for_90_min = 90 * 60
-    if nonce.empty?
-      false
-    elsif $redis.get(nonce).nil?
-      $redis.setex(nonce, keep_for_90_min, timeStamp)
-      true
-    else
+    begin
+      if nonce.empty?
+        false
+      elsif $redis.get(nonce).nil?
+        $redis.setex(nonce, keep_for_90_min, timeStamp)
+        true
+      else
+        false
+      end
+    rescue => e
+      logger.debug "#{e.message}"
       false
     end
   end

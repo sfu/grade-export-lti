@@ -169,3 +169,27 @@ input {
   }
 }
 
+.btn-primary {
+  background-color: #008ee2;
+}
+
+.navbar-inverse {
+  background-color: #394b58;
+  .navbar-nav {
+    li {
+      a {
+        color: #ffffff;
+        &:hover {
+          color: #999999;
+        }
+      }
+    }
+  }
+}
+
+.dropdown-menu {
+  background-color: #394b58;
+}
+
+
+

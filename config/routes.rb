@@ -34,6 +34,8 @@ Rails.application.routes.draw do
   get     '/courses/:id',     to: 'grade_export#grades', as: 'grades'
   get     '/export/:id',      to: 'grade_export#export', as: 'export'
 
+  get     '/all_grades',      to: 'grade_export#all_grades'
+
   #get 'grade_export/export'
 
   resources :users

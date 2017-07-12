@@ -1,54 +1,67 @@
 class GradeExportController < ApplicationController
-  # before_action :logged_in_user, only: [:show]
-  # before_action :correct_user,   only: [:show]
   before_action :authorize
 
   def courses
-    parameters = {
-        :access_token => current_user.access_token
-    }
-    #path for enrollments: /api/v1/courses/3/enrollments
-    uri = URI::HTTP.build(host: 'web.canvaslms.docker', path: '/api/v1/courses/', query: parameters.to_query)
-    response = Net::HTTP.get_response(uri)
-    if response.code == NOT_AUTHORIZED
-      redirect_to current_user
-    else
-      @json_response = JSON.parse(response.body)
-    end
+    @courses = response_for('/api/v1/courses/')
   end
 
   def grades
-    parameters = {
-        :access_token => current_user.access_token
-    }
-    #path for enrollments: /api/v1/courses/3/enrollments
-    uri = URI::HTTP.build(host: 'web.canvaslms.docker', path: "/api/v1/courses/#{params[:id]}/enrollments", query: parameters.to_query)
-    response = Net::HTTP.get_response(uri)
-    if response.code == NOT_AUTHORIZED
-      redirect_to current_user
-    else
-      @json_response = JSON.parse(response.body)
+    @enrollments = response_for("/api/v1/courses/#{params[:id]}/enrollments")
+  end
+
+  def all_grades
+    @assignments = {}
+    courses = response_for('/api/v1/courses/').map {|course| OpenStruct.new(course)}
+    courses.each do |course|
+      students = response_for("/api/v1/courses/#{course.id}/students").map {|student| OpenStruct.new(student)}
+      logger.debug "/api/v1/courses/#{course.id}/assignments"
+      response_for("/api/v1/courses/#{course.id}/assignments").map {|assignment| OpenStruct.new(assignment)}.each do |assignment|
+        submissions = {}
+        response_for("/api/v1/courses/#{course.id}/assignments/#{assignment.id}/submissions").map {|submission| OpenStruct.new(submission)}.each do |submission|
+          idx = students.index {|s| s.id.to_i == submission.user_id.to_i}
+          student_sis_id = idx ? students[idx].sis_user_id : nil
+          student_name = idx ? students[idx].name : nil
+          submissions[submission.id] = {
+              'user_id'            => submission.user_id,
+              'course_name'        => course.name,
+              'student_name'       => student_name,
+              'student_sis_id'     => student_sis_id,
+              'assignment_name'    => assignment.name,
+              'grade'              => submission.grade
+          }
+        end
+        @assignments[assignment.name] = submissions
+      end
     end
   end
 
   def export
+    @enrollments = response_for("/api/v1/courses/#{params[:id]}/enrollments")
+  end
+
+  private
+
+  def response_for(path)
     parameters = {
         :access_token => current_user.access_token
     }
     #path for enrollments: /api/v1/courses/3/enrollments
-    uri = URI::HTTP.build(host: 'web.canvaslms.docker', path: "/api/v1/courses/#{params[:id]}/enrollments", query: parameters.to_query)
+    uri = URI::HTTP.build(host: 'web.canvaslms.docker', path: path, query: parameters.to_query)
     response = Net::HTTP.get_response(uri)
     if response.code == NOT_AUTHORIZED
       redirect_to current_user
     else
-      @json_response = JSON.parse(response.body)
-      # respond_to do |format|
-      #   format.html
-      #   format.xlsx
-      # end
+      JSON.parse(response.body)
     end
   end
 
-  private
+  def response_for_2(path)
+    parameters = {
+        :access_token => current_user.access_token
+    }
+    #path for enrollments: /api/v1/courses/3/enrollments
+    uri = URI::HTTP.build(host: 'web.canvaslms.docker', path: path, query: parameters.to_query)
+    Net::HTTP.get_response(uri)
+  end
 
 end
