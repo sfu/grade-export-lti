@@ -17,26 +17,17 @@ Rails.application.routes.draw do
   get     '/lti',             to: 'lti#lti_get'
   post    '/lti',             to: 'lti#lti_post'
 
-  post    '/check-nonce',     to: 'lti#check_nonce'
-
-  get     '/generate-string', to: 'lti#generate_string'
-  post    '/generate-string', to: 'lti#generate_string'
-
   get     '/oauth_start',     to: 'api_oauth#start'
   get     '/get_token',       to: 'api_oauth#get_token'
   get     '/logout',          to: 'api_oauth#logout'
 
-  get     '/canvas_api_get',  to: 'api_oauth#canvas_api_get'
-  get     '/canvas_api_post', to: 'api_oauth#canvas_api_post'
-  get     '/refresh-token',   to: 'api_oauth#refresh_token'
+  get     '/refresh_token',   to: 'api_oauth#refresh_token'
 
   get     '/courses',         to: 'grade_export#courses'
   get     '/courses/:id',     to: 'grade_export#grades', as: 'grades'
   get     '/export/:id',      to: 'grade_export#export', as: 'export'
 
-  get     '/all_grades',      to: 'grade_export#all_grades'
-
-  #get 'grade_export/export'
+  get     '/all_grades/:id',  to: 'grade_export#all_grades'
 
   resources :users
 end

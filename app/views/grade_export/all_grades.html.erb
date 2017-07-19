@@ -1,6 +1,44 @@
 <% provide(:title, 'View Courses') %>
 
 
+<div class="container">
+  <h2>Grades for Course:</h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Student Id</th>
+      <% @assignments.each_key do |assignment_name| %>
+        <th> <%= assignment_name %> </th>
+      <% end %>
+    </tr>
+    </thead>
+    <tbody>
+    <% @student_submissions.each_key do |submission| %>
+      <tr>
+        <td> <%= submission %> </td>
+        <% @student_submissions[submission].each_key do |grade| %>
+          <td> <%= @student_submissions[submission][grade].nil? ? '-' : @student_submissions[submission][grade] %> </td>
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="row">
+  <% @student_submissions.each_key do |k| %>
+      <li>
+        <%= k %>
+          <% @student_submissions[k].each_key do |assign| %>
+            <%= @student_submissions[k][assign].nil? %>
+          <% end %>
+        <% end %>
+      </li>
+</div>
 
 <%= @assignments.keys %>
+<hr>
+<%= @student_submissions %>
+
+
 

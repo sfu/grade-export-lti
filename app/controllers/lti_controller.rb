@@ -40,16 +40,6 @@ class LtiController < ApplicationController
 
   end
 
-  def check_nonce
-    render plain: "Nonce is valid? #{valid_nonce?(request.request_parameters['oauth_nonce'], request.request_parameters['oauth_timestamp'])}
-                    Time Stamp is valid? #{valid_timeStamp?}
-                    Signature is valid? #{valid_lti_signature?}"
-  end
-
-  def generate_string
-    render plain: "Secure Random is: #{SecureRandom.hex(10)}, user is: #{user_exists?(request.request_parameters['lis_person_contact_email_primary'])}"
-  end
-
   private
 
   def valid_nonce?(nonce, timeStamp)

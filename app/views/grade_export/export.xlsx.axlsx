@@ -11,7 +11,7 @@ wb.add_worksheet(name: "Enrollments") do |sheet|
                             enrollment['user']['name']
                           ]
         rescue => e
-        sheet.add_row ["Could not generate the correct record"]
+        sheet.add_row ["Could not generate the correct records"]
     end
   end
 end
