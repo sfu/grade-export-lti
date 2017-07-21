@@ -15,6 +15,7 @@ $gray-medium-light: #eaeaea;
 
 body {
   padding-top: 60px;
+  padding-bottom: 120px;
 }
 
 section {
@@ -195,5 +196,7 @@ input {
   background-color: white;
 }
 
-
-
+.course-icon {
+  color: #6c8a9f;
+  padding-bottom: 16px;
+}

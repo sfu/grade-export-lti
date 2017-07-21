@@ -2,19 +2,31 @@
 
 <div class="container">
   <h3>Your Courses:</h3>
-  <br>
-  <div class="row">
-    <% @courses.each do |course| %>
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <%= link_to image_tag("course_cover.svg", alt: "Rails logo"), 'http://rubyonrails.org/' %>
-            <div class="caption">
-              <h3> <%= course['name'] %> </h3>
-              <p></p>
-              <p><%= link_to "View Grades", grades_path(course['id']), class: "btn btn-default" %> <%= link_to "Export Grades", export_path(course['id'], format: :xlsx), class: "btn btn-primary" %></p>
+  <hr>
+</div>
+
+
+<div class="w3-cell-row">
+  <% @courses.each do |course| %>
+      <div class="w3-container w3-cell w3-third w3-padding-32 w3-mobile">
+        <div class="w3-card-2 w3-hover-shadow" style="width:100%">
+          <%= image_tag("course_cover.svg", :alt => "Course Cover", :style => "width:100%") %>
+          <!--<img src="img_fjords.jpg" alt="Norway" style="width:100%">-->
+          <div class="w3-container w3-margin-top">
+            <p> <%= course['name'] %> </p>
+          </div>
+          <div class="w3-row">
+            <div class="w3-quarter w3-center">
+              <h3> </h3>
+              <!--<span class="glyphicon glyphicon-new-window course-icon" aria-hidden="true"></span>-->
+              <%= link_to '<span class="glyphicon glyphicon-new-window course-icon" aria-hidden="true"></span>'.html_safe, grades_path(course['id']) %>
+            </div>
+            <div class="w3-quarter w3-center">
+              <h3> </h3>
+              <%= link_to '<span class="glyphicon glyphicon-save course-icon" aria-hidden="true"></span>'.html_safe, export_path(course['id'], format: :xlsx) %>
             </div>
           </div>
         </div>
-    <% end %>
-  </div>
+      </div>
+  <% end %>
 </div>
