@@ -19,11 +19,11 @@
             <div class="w3-quarter w3-center">
               <h3> </h3>
               <!--<span class="glyphicon glyphicon-new-window course-icon" aria-hidden="true"></span>-->
-              <%= link_to '<span class="glyphicon glyphicon-new-window course-icon" aria-hidden="true"></span>'.html_safe, grades_path(course['id']) %>
+              <%= link_to '<span class="glyphicon glyphicon-new-window course-icon" title="View Grades" aria-hidden="true"></span>'.html_safe, grades_path(course['id']) %>
             </div>
             <div class="w3-quarter w3-center">
               <h3> </h3>
-              <%= link_to '<span class="glyphicon glyphicon-save course-icon" aria-hidden="true"></span>'.html_safe, export_path(course['id'], format: :xlsx) %>
+              <%= link_to '<span class="glyphicon glyphicon-save course-icon" title="Download SIS compatible grades file" aria-hidden="true"></span>'.html_safe, export_path(course['id'], format: :xlsx) %>
             </div>
           </div>
         </div>
