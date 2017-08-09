@@ -7,16 +7,20 @@
       </h1>
       <div>
         <ul>
-          <li><%= @user.id %></li>
-          <li><%= @user.email %></li>
-          <li><%= logged_in? %></li>
-          <li>Session id: <%= session[:user_id] %></li>
-          <li>Access Token: <%= current_user.access_token %></li>
+          <li>User Id: <%= @user.id %></li>
+          <li>User Email<%= @user.email %></li>
+          <li>Is logged in: <%= logged_in? %></li>
+          <li>Session id: <%= session[:session_id] %></li>
+          <li>User Id from Session: <%= session[:user_id] %></li>
+          <!--<li>Access Token: <%# current_user.access_token %></li>-->
         </ul>
       </div>
     </section>
   </aside>
 </div>
 <div class="row">
-  <div class="center"><%= link_to "Get Started!", oauth_start_path, class: "btn btn-lg btn-default" %></div>
+  <!--<div class="center"><%# link_to "Get Started!", oauth_start_path, class: "btn btn-lg btn-default" %></div>-->
+  <div class="center">
+    <%= link_to "Get Started!", token_has_expired? ? oauth_start_path : courses_path, class: "btn btn-lg btn-default" %>
+  </div>
 </div>

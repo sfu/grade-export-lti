@@ -9,7 +9,7 @@ class LtiController < ApplicationController
   def lti_post
     nonce_isvalid     = valid_nonce?(request.request_parameters['oauth_nonce'], request.request_parameters['oauth_timestamp'])
     timestamp_isvalid = valid_timeStamp?(request.request_parameters['oauth_timestamp'])
-    signature_isvalid = valid_lti_signature?(request.url, request.request_parameters, "e074d7479a64c091bf3134da88f582301")
+    signature_isvalid = valid_lti_signature?(request.url, request.request_parameters, Rails.application.secrets.lti_secret)
 
     if nonce_isvalid && timestamp_isvalid && signature_isvalid
       @user = user_exists?(request.request_parameters['lis_person_contact_email_primary'])

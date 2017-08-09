@@ -17,5 +17,8 @@ module SampleApp
 
     # Redis configuration
     config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
+
+    # Add timezone to active record
+    config.active_record.default_timezone = :local
   end
 end

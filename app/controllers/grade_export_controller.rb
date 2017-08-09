@@ -2,11 +2,11 @@ class GradeExportController < ApplicationController
   before_action :authorize
 
   def courses
-    @courses = response_for('/api/v1/courses/')
+    @courses = response_for_2('/api/v1/courses/')
   end
 
   def grades
-    @enrollments = response_for("/api/v1/courses/#{params[:id]}/enrollments")
+    @enrollments = response_for_2("/api/v1/courses/#{params[:id]}/enrollments")
   end
 
   # def all_grades
@@ -65,7 +65,7 @@ class GradeExportController < ApplicationController
   end
 
   def export
-    @enrollments = response_for("/api/v1/courses/#{params[:id]}/enrollments")
+    @enrollments = response_for_2("/api/v1/courses/#{params[:id]}/enrollments")
     respond_to do |format|
       format.html
       format.xlsx {
@@ -76,6 +76,7 @@ class GradeExportController < ApplicationController
 
   private
 
+  # Includes access_token in the POST
   def response_for(path)
     parameters = {
         :access_token => current_user.access_token
@@ -83,6 +84,21 @@ class GradeExportController < ApplicationController
     #path for enrollments: /api/v1/courses/3/enrollments
     uri = URI::HTTP.build(host: 'web.canvaslms.docker', path: path, query: parameters.to_query)
     response = Net::HTTP.get_response(uri)
+    if response.code == NOT_AUTHORIZED
+      redirect_to current_user
+    else
+      JSON.parse(response.body)
+    end
+  end
+
+  # Includes the access_token in the Request Header - better practice according to Canvas LMS documentation
+  def response_for_2(path)
+    uri = URI::HTTP.build(host: 'web.canvaslms.docker', path: path)
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Get.new(uri.request_uri)
+    logger.debug "#{request}"
+    request['Authorization'] = "Bearer #{current_user.access_token}"
+    response = http.request(request)
     if response.code == NOT_AUTHORIZED
       redirect_to current_user
     else
