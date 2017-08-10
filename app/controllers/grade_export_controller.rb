@@ -100,7 +100,7 @@ class GradeExportController < ApplicationController
     request['Authorization'] = "Bearer #{current_user.access_token}"
     response = http.request(request)
     if response.code == NOT_AUTHORIZED
-      redirect_to current_user
+      redirect_to refresh_token_path
     else
       JSON.parse(response.body)
     end

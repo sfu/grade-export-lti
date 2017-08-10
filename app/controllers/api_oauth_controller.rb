@@ -45,9 +45,14 @@ class ApiOauthController < ApplicationController
     response = Net::HTTP.post_form(uri, params)
     json_response = JSON.parse(response.body)
 
-    current_user.update_attribute(:access_token, json_response['access_token'])
-
-    render plain: json_response
+    if json_response['error'] == 'invalid_request'
+      redirect_to oauth_start_path
+    else
+      current_user.update_columns(
+          :access_token     => json_response['access_token'],
+          :token_expires_at => DateTime.now + 59.minutes, )
+      redirect_to courses_path
+    end
   end
 
   def logout
