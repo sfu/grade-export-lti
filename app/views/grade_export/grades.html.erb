@@ -20,10 +20,10 @@
         <% if enrollment['type'] == 'StudentEnrollment' %>
             <tr>
               <td>
-                <%= extract_details(enrollment['sis_course_id'], CourseDetail::SUBJECT).upcase %>
-                <%= extract_details(enrollment['sis_course_id'], CourseDetail::NUMBER).upcase %>
+                <%= extract_details(enrollment['sis_section_id'], CourseDetail::SUBJECT).upcase %>
+                <%= extract_details(enrollment['sis_section_id'], CourseDetail::NUMBER).upcase %>
               </td>
-              <td><%= extract_details(enrollment['sis_course_id'], CourseDetail::SECTION).upcase %></td>
+              <td><%= extract_details(enrollment['sis_section_id'], CourseDetail::SECTION).upcase %></td>
               <td><%= enrollment['user']['name'] %></td>
               <td><%= enrollment['user']['sis_user_id'] %></td>
               <td><%= enrollment['grades']['final_score'] %></td>

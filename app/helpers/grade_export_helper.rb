@@ -1,7 +1,8 @@
 module GradeExportHelper
-  def extract_details(sis_course_id, option)
+  def extract_details(sis_section_id, option)
     begin
-      course_details = sis_course_id.split('-')
+      course_details = sanitise_sis_id(sis_section_id)
+
       case option
         when CourseDetail::TERM
           return course_details[CourseDetail::TERM]
@@ -13,9 +14,14 @@ module GradeExportHelper
           return course_details[CourseDetail::SECTION]
       end
     rescue => e
-      logger.debug "sis_course_id is null or has wrong format sis_course_id: #{sis_course_id}"
+      logger.debug "sis_course_id is null or has wrong format sis_course_id: #{sis_section_id}"
       flash.now[:danger] = 'sis_course_id is null or has wrong format, as a result, course and section fields will not be displayed'
       render template: 'shared/error'
     end
+  end
+
+  def sanitise_sis_id(str)
+    # String input format: ####-aaaa-###-a###:::###########
+    str.split(':::')[0].split('-')
   end
 end
