@@ -1,10 +1,26 @@
 <% provide(:title, 'View Grades') %>
+<% content_for(:header) do %>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#grades_table').DataTable({
+                "columnDefs": [ {
+                    "targets": 0,
+                    "orderable": false
+                } ]
+            });
+        } );
+    </script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" >
+<% end %>
 
 <!-- <div class="panel panel-primary"> -->
   <!-- Default panel contents -->
   <!-- <div class="panel-heading">Grade Report</div> -->
   <!-- Table -->
-  <table class="table">
+  <table id="grades_table" class="table table-striped table-bordered">
     <thead>
     <tr>
       <th>Course</th>
@@ -15,7 +31,7 @@
       <th>Final Grade</th>
     </tr>
     </thead>
-    <tbody>
+    <tbodyq>
     <% @enrollments.each do |enrollment| %>
         <% if enrollment['type'] == 'StudentEnrollment' %>
             <tr>
@@ -31,5 +47,5 @@
             </tr>
         <% end %>
     <% end %>
-    </tbody>
+    </tbodyq>
   </table>
