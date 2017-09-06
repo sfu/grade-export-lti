@@ -31,7 +31,7 @@
       <th>Final Grade</th>
     </tr>
     </thead>
-    <tbody>
+    <tbodyq>
     <% @enrollments.each do |enrollment| %>
         <% if enrollment['type'] == 'StudentEnrollment' %>
             <tr>
@@ -47,5 +47,5 @@
             </tr>
         <% end %>
     <% end %>
-    </tbody>
+    </tbodyq>
   </table>
