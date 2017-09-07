@@ -4,9 +4,9 @@ wb.add_worksheet(name: "Enrollments") do |sheet|
     if enrollment['type'] == 'StudentEnrollment'
         begin
             sheet.add_row [
-                                extract_details(enrollment['sis_course_id'], CourseDetail::SUBJECT).upcase,
-                                extract_details(enrollment['sis_course_id'], CourseDetail::NUMBER).upcase,
-                                extract_details(enrollment['sis_course_id'], CourseDetail::SECTION).upcase,
+                                extract_details(enrollment['sis_section_id'], CourseDetail::SUBJECT).upcase,
+                                extract_details(enrollment['sis_section_id'], CourseDetail::NUMBER).upcase,
+                                extract_details(enrollment['sis_section_id'], CourseDetail::SECTION).upcase,
                                 enrollment['user']['sis_user_id'],
                                 enrollment['grades']['final_grade'],
                                 enrollment['user']['name']
