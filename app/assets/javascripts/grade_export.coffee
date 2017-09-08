@@ -2,10 +2,10 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-#jQuery ->
-#  $('#grades_table').dataTable()
-
-ready = ->
-  $('#grades_table').dataTable()
-
-$(document).ready(ready)
+$(document).on "turbolinks:load", ->
+  $('#grades_table').dataTable({
+    "columnDefs": [{
+      "targets": 0,
+      "orderable": false
+    }]
+  })
