@@ -5,6 +5,10 @@ class GradeExportController < ApplicationController
     @courses = response_for('/api/v1/courses/')
   end
 
+  def course
+    @course = response_for("/api/v1/courses/#{params[:id]}")
+  end
+
   def grades
     @enrollments = response_for("/api/v1/courses/#{params[:id]}/enrollments")
   end

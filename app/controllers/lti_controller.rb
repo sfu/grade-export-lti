@@ -11,11 +11,13 @@ class LtiController < ApplicationController
     timestamp_isvalid = valid_timeStamp?(request.request_parameters['oauth_timestamp'])
     signature_isvalid = valid_lti_signature?(request.url, request.request_parameters, Rails.application.secrets.lti_secret)
 
+    course_id         =  request.request_parameters['custom_canvas_course_id']
+
     if nonce_isvalid && timestamp_isvalid && signature_isvalid
       @user = user_exists?(request.request_parameters['lis_person_contact_email_primary'])
 
       if @user
-        login_user(@user, "Hello #{@user.name}, Welcome back to the Grade Export App!")
+        login_user(@user, course_id, "Hello #{@user.name}, Welcome back to the Grade Export App!")
       else
         random_secure_string = SecureRandom.hex(10)
         @request_params = request.request_parameters
@@ -24,7 +26,7 @@ class LtiController < ApplicationController
                          password: random_secure_string,
                          password_confirmation: random_secure_string)
         if @user.save
-          login_user(@user, "Hello #{@user.name}, Welcome to the Grade Export App!")
+          login_user(@user, course_id ,"Hello #{@user.name}, Welcome to the Grade Export App!")
         else
           flash.now[:danger] = 'Oooops!..... Could not create user!'
           logger.debug @user.errors.full_messages
@@ -77,8 +79,9 @@ class LtiController < ApplicationController
     @user = User.find_by(email: email)
   end
 
-  def login_user(user, message)
+  def login_user(user, course, message)
     session[:user_id] = user.id
+    session[:course_id] = course
     flash[:success] = message
     redirect_to user
   end
