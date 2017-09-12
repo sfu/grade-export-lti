@@ -16,21 +16,21 @@ class GradeExportController < ApplicationController
   def all_grades
     @assignments = {}
     @student_submissions = {}
-      students = response_for("/api/v1/courses/#{params[:id]}/students").map {|student| OpenStruct.new(student)}.each do |student|
-        @student_submissions[student.sis_user_id] = {}
+    students = response_for("/api/v1/courses/#{params[:id]}/students").map {|student| OpenStruct.new(student)}.each do |student|
+      @student_submissions[student.sis_user_id] = {}
+    end
+    response_for("/api/v1/courses/#{params[:id]}/assignments").map {|assignment| OpenStruct.new(assignment)}.each do |assignment|
+      submissions = {}
+      response_for("/api/v1/courses/#{params[:id]}/assignments/#{assignment.id}/submissions").map {|submission| OpenStruct.new(submission)}.each do |submission|
+        idx = students.index {|s| s.id.to_i == submission.user_id.to_i}
+        student_sis_id = idx ? students[idx].sis_user_id : nil
+        student_name = idx ? students[idx].name : nil
+        @student_submissions[student_sis_id].merge!({
+                                                        assignment.name => submission.grade,
+                                                    })
       end
-      response_for("/api/v1/courses/#{params[:id]}/assignments").map {|assignment| OpenStruct.new(assignment)}.each do |assignment|
-        submissions = {}
-        response_for("/api/v1/courses/#{params[:id]}/assignments/#{assignment.id}/submissions").map {|submission| OpenStruct.new(submission)}.each do |submission|
-          idx = students.index {|s| s.id.to_i == submission.user_id.to_i}
-          student_sis_id = idx ? students[idx].sis_user_id : nil
-          student_name = idx ? students[idx].name : nil
-          @student_submissions[student_sis_id].merge!({
-                                                          assignment.name => submission.grade,
-                                                      })
-        end
-        @assignments[assignment.name] = submissions
-      end
+      @assignments[assignment.name] = submissions
+    end
   end
 
   def export
