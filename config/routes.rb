@@ -24,7 +24,9 @@ Rails.application.routes.draw do
 
   get     '/refresh_token',   to: 'api_oauth#refresh_token'
 
-  get     '/courses',         to: 'grade_export#courses'
+
+ # get     '/courses',         to: 'grade_export#courses'
+  get     '/:id',             to: 'grade_export#course', as: 'course'
   get     '/courses/:id',     to: 'grade_export#grades', as: 'grades'
   get     '/export/:id',      to: 'grade_export#export', as: 'export'
 
