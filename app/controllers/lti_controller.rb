@@ -40,6 +40,10 @@ class LtiController < ApplicationController
 
   end
 
+  def configuration
+
+  end
+
   private
 
   def valid_nonce?(nonce, timeStamp)
