@@ -31,7 +31,7 @@ class ApiOauthController < ApplicationController
     #current_user.update_attribute(:access_token, json_response['access_token']) unless json_response['access_token'].nil?
     #current_user.update_attribute(:refresh_token, json_response['refresh_token']) unless json_response['refresh_token'].nil?
 
-    redirect_to courses_path
+    redirect_to course_path(session[:course_id])
   end
 
   def refresh_token
@@ -51,7 +51,7 @@ class ApiOauthController < ApplicationController
       current_user.update_columns(
           :access_token     => json_response['access_token'],
           :token_expires_at => DateTime.now + 59.minutes, )
-      redirect_to courses_path
+      redirect_to course_path(session[:course_id])
     end
   end
 
