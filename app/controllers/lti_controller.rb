@@ -43,7 +43,7 @@ class LtiController < ApplicationController
   end
 
   def configuration
-
+    render 'lti/configuration', :content_type => 'application/xml'
   end
 
   private

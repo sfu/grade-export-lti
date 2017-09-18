@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   get     '/lti',             to: 'lti#lti_get'
   post    '/lti',             to: 'lti#lti_post'
-  get     'lti/config',       to: 'lti#configuration', defaults: { format: 'xml' }
+  get     '/lti/config',       to: 'lti#configuration', defaults: { format: 'xml' }
 
   get     '/oauth_start',     to: 'api_oauth#start'
   get     '/get_token',       to: 'api_oauth#get_token'
