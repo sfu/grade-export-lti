@@ -21,8 +21,33 @@
         </div>
         <div class="w3-quarter w3-center">
           <h3></h3>
-          <%= link_to '<span class="glyphicon glyphicon-save course-icon" title="Download SIS compatible grades file" aria-hidden="true"></span>'.html_safe, export_path(@course['id'], format: :xlsx) %>
+          <% if @grading_standard.any? %>
+              <%= link_to '<span class="glyphicon glyphicon-save course-icon" title="Download SIS compatible grades file" aria-hidden="true"></span>'.html_safe, export_path(@course['id'], format: :xlsx) %>
+          <% else %>
+              <%= link_to '<span class="glyphicon glyphicon-save course-icon" title="Download SIS compatible grades file" aria-hidden="true"></span>'.html_safe, "#myModal", "data-toggle" => "modal" %>
+          <% end %>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%# @grading_standard %>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Apply Grading Standard </h4>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-warning">
+          <strong>Warning!</strong> Please apply a grading standard to the final grades before the import.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

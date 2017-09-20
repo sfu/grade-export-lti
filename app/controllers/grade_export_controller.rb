@@ -6,7 +6,8 @@ class GradeExportController < ApplicationController
   end
 
   def course
-    @course = response_for("/api/v1/courses/#{params[:id]}")
+    @course = response_for_skip_redirect("/api/v1/courses/#{params[:id]}", false)
+    @grading_standard = response_for_skip_redirect("/api/v1/courses/#{params[:id]}/grading_standards", true)
   end
 
   def grades
@@ -54,6 +55,20 @@ class GradeExportController < ApplicationController
     request['Authorization'] = "Bearer #{current_user.access_token}"
     response = http.request(request)
     if response.code == NOT_AUTHORIZED
+      redirect_to refresh_token_path
+    else
+      JSON.parse(response.body)
+    end
+  end
+
+  def response_for_skip_redirect(path, skip_redirect)
+    uri = URI::HTTP.build(host: 'web.canvaslms.docker', path: path)
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Get.new(uri.request_uri)
+    logger.debug "#{request}"
+    request['Authorization'] = "Bearer #{current_user.access_token}"
+    response = http.request(request)
+    if response.code == NOT_AUTHORIZED && !skip_redirect
       redirect_to refresh_token_path
     else
       JSON.parse(response.body)
