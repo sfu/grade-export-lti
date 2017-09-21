@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  grading_scheme: 
+  user: one
+
+two:
+  title: MyString
+  grading_scheme: 
+  user: two
