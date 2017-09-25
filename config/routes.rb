@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  get 'grading_standards/show'
+
+  get 'grading_standards/new'
+
+  get 'grading_standards/create'
+
   root 'static_pages#home'
 
   get     '/help',            to: 'static_pages#help'
@@ -33,4 +39,5 @@ Rails.application.routes.draw do
   get     '/all_grades/:id',  to: 'grade_export#all_grades'
 
   resources :users
+  resources :grading_standards
 end
