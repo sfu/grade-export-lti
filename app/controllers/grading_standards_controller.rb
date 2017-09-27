@@ -3,6 +3,7 @@ class GradingStandardsController < ApplicationController
   end
 
   def new
+    @grading_standard = current_user.grading_standards.new
   end
 
   def create

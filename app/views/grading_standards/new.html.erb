@@ -1,2 +1,18 @@
-<h1>GradingStandards#new</h1>
-<p>Find me in app/views/grading_standards/new.html.erb</p>
+<% provide(:title, 'New Grading Scheme') %>
+<h1>New Grading Scheme</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@grading_standard) do |f| %>
+        <%= render 'shared/grading_error_messages' %>
+
+        <%= f.label :title %>
+        <%= f.text_field :title, class: 'form-control' %>
+
+        <%= f.label :grading_scheme %>
+        <%= f.text_field :grading_scheme, class: 'form-control' %>
+
+        <%= f.submit "Create New Grading Scheme", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

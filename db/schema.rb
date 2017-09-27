@@ -10,16 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170920212148) do
+ActiveRecord::Schema.define(version: 20170927182727) do
 
-  create_table "grading_standards", force: :cascade do |t|
-    t.string "title"
-    t.text "grading_scheme"
-    t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_grading_standards_on_user_id"
-  end
+# Could not dump table "grading_standards" because of following StandardError
+#   Unknown type 'json' for column 'grading_scheme'
 
   create_table "users", force: :cascade do |t|
     t.string "name"
