@@ -1,2 +1,17 @@
-<h1>GradingStandards#show</h1>
-<p>Find me in app/views/grading_standards/show.html.erb</p>
+<% provide(:title, 'Grading Schemes') %>
+
+<div class="container">
+  <h3>Your Grading Standards:</h3>
+  <hr>
+</div>
+
+<div class="w3-cell-row">
+  <%= @grading_standard[:title] %>
+</div>
+
+<p>
+  <strong>Grading Standards:</strong>
+  <% @grading_standard.grading_schemes.each do |gs| %>
+      <%= gs.name %> (<%= gs.percentage %>)<br />
+  <% end %>
+</p>
