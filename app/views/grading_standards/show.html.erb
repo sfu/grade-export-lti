@@ -6,12 +6,13 @@
 </div>
 
 <div class="w3-cell-row">
-  <%= @grading_standard[:title] %>
-</div>
-
-<p>
-  <strong>Grading Standards:</strong>
-  <% @grading_standard.grading_schemes.each do |gs| %>
-      <%= gs.name %> (<%= gs.percentage %>)<br />
+  <% @grading_standards.each do |grading_standard| %>
+      <p>
+        <strong> <%= grading_standard[:title] %> </strong>
+            <% grading_standard.grading_scheme.each do |gs| %>
+            <br /><%= gs.name %> -> <%= gs.percentage %>
+        <% end %>
+      </p>
   <% end %>
-</p>
+</div>
+cle

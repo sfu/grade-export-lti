@@ -9,8 +9,9 @@
         <%= f.label :title %>
         <%= f.text_field :title, class: 'form-control' %>
 
-        <%= f.label :grading_scheme %>
-        <%= f.text_field :grading_scheme, class: 'form-control' %>
+        <%= f.fields_for :grading_scheme do |gs_form| %>
+            <%= render 'grading_scheme_fields', f: gs_form %>
+        <% end %>
 
         <%= f.submit "Create New Grading Scheme", class: "btn btn-primary" %>
     <% end %>
