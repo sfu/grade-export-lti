@@ -11,9 +11,15 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery_ujs
 //= require rails-ujs
 //= require bootstrap
 //= require turbolinks
 //= require dataTables/jquery.dataTables
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require_tree .
+
+
+setTimeout(function() {
+    $("#alert").fadeOut(3000);
+}, 6000);
