@@ -11,8 +11,9 @@
             <div class="panel-heading">
               <%= grading_standard[:title] %>
               <%= link_to '<span id="delete" class="glyphicon glyphicon-remove pull-right action-icon" title="Remove grading scheme"></span>'.html_safe, grading_standard_path(grading_standard[:id]), method: :delete %>
+              <%= link_to '<span id="edit" class="glyphicon glyphicon-pencil pull-right action-icon" title="Edit grading scheme"></span>'.html_safe, edit_grading_standard_path(grading_standard[:id]) %>
               <!--<a href="#"><span id="delete" class="glyphicon glyphicon-remove pull-right action-icon"></span></a>-->
-              <a href="#"><span id="edit" class="glyphicon glyphicon-pencil pull-right action-icon" title="Edit grading scheme"></span></a>
+              <!--<a href="#"><span id="edit" class="glyphicon glyphicon-pencil pull-right action-icon" title="Edit grading scheme"></span></a>-->
             </div>
             <div class="panel-body">
               <p>

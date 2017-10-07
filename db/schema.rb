@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170927215926) do
+ActiveRecord::Schema.define(version: 20171005235352) do
 
 # Could not dump table "grading_standards" because of following StandardError
 #   Unknown type 'json' for column 'grading_scheme'
