@@ -9,37 +9,11 @@
         <%= f.label :title %>
         <%= f.text_field :title, class: 'form-control' %>
 
-        <% @grading_standard.grading_scheme.each_with_index do |gs, i| %>
-            <%= f.fields_for gs, index: i do |sf| %>
-                <%= sf.label :name %>
-                <%= sf.text_field :name %>
-                <%= sf.label :percentage %>
-                <%= sf.text_field :percentage %>
-            <% end %>
-        <% end %>
-
-        <%= f.submit "Save changes", class: "btn btn-primary" %>
-    <% end %>
-  </div>
-</div>
-
-<strong><hr></strong>
-
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for(@grading_standard) do |f| %>
-        <%= render 'shared/grading_error_messages' %>
-
-        <%= f.label :title %>
-        <%= f.text_field :title, class: 'form-control' %>
-
-        <% @grading_standard.grading_scheme.each do |gs| %>
-            <%= f.fields_for gs do |sf| %>
-                <%= sf.label :name %>
-                <%= sf.text_field :name %>
-                <%= sf.label :percentage %>
-                <%= sf.text_field :percentage %>
-            <% end %>
+        <%= f.fields_for :grading_scheme do |sf| %>
+            <%= sf.label :name %>
+            <%= sf.text_field :name %>
+            <%= sf.label :percentage %>
+            <%= sf.text_field :percentage %>
         <% end %>
 
         <%= f.submit "Save changes", class: "btn btn-primary" %>

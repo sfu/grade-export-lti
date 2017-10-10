@@ -47,6 +47,6 @@ class GradingStandardsController < ApplicationController
 
   private
   def grading_standard_params
-    params.required(:grading_standard).permit(:title, :grading_scheme)
+    params.required(:grading_standard).permit(:title, grading_scheme_attributes: [:name, :percentage])
   end
 end

@@ -51,8 +51,8 @@
     </column>
     <column id="17" parent="4" name="grading_scheme">
       <Position>2</Position>
-      <DataType>text|0</DataType>
-      <DefaultExpression>NULL</DefaultExpression>
+      <DataType>json|0</DataType>
+      <DefaultExpression>&apos;[{&quot;name&quot;:&quot;A+&quot;,&quot;percentage&quot;:95},{&quot;name&quot;:&quot;A&quot;,&quot;percentage&quot;:90},{&quot;name&quot;:&quot;A-&quot;,&quot;percentage&quot;:85},{&quot;name&quot;:&quot;B+&quot;,&quot;percentage&quot;:80},{&quot;name&quot;:&quot;B&quot;,&quot;percentage&quot;:75},{&quot;name&quot;:&quot;B-&quot;,&quot;percentage&quot;:70},{&quot;name&quot;:&quot;C+&quot;,&quot;percentage&quot;:65},{&quot;name&quot;:&quot;C&quot;,&quot;percentage&quot;:60},{&quot;name&quot;:&quot;C-&quot;,&quot;percentage&quot;:55},{&quot;name&quot;:&quot;D&quot;,&quot;percentage&quot;:50},{&quot;name&quot;:&quot;F&quot;,&quot;percentage&quot;:0}]&apos;</DefaultExpression>
     </column>
     <column id="18" parent="4" name="user_id">
       <Position>3</Position>

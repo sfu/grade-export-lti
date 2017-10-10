@@ -19,10 +19,10 @@
               <p>
                 <% grading_standard.grading_scheme.each_with_index do |grading_scheme, i| %>
                     <div class="row">
-                      <div class="col-sm-3"><%= grading_scheme.name %></div>
-                      <div class="col-sm-3"> <%= i == 0 ? ' ' : '< ' %> <%= i == 0 ? '100' : grading_standard.grading_scheme[i-1].percentage %>%</div>
-                      <div class="col-sm-3 text-center">to</div>
-                      <div class="col-sm-3"><%= grading_scheme.percentage %>%</div>
+                      <div class="col-xs-3 col-sm-3"><%= grading_scheme.name %></div>
+                      <div class="col-xs-3 col-sm-3"> <%= i == 0 ? ' ' : '< ' %> <%= i == 0 ? '100' : grading_standard.grading_scheme[i-1].percentage %>%</div>
+                      <div class="col-xs-3 col-sm-3 text-center">to</div>
+                      <div class="col-xs-3 col-sm-3"><%= grading_scheme.percentage %>%</div>
                     </div>
                     <!--<br/><%# grading_scheme.name %> : <%# i == 0 ? '100' : grading_standard.grading_scheme[i-1].percentage %>% to <%# grading_scheme.percentage %>%-->
                 <% end %>
