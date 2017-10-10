@@ -29,13 +29,13 @@ class GradingStandardsController < ApplicationController
   def update
     @grading_standard = current_user.grading_standards.find(params[:id])
     @gs_params = grading_standard_params
-    render 'show'
-    # if @grading_standard.update_attributes(grading_standard_params)
-    #   flash[:success] = "Grading scheme has been updated"
-    #   redirect_to grading_standards_path
-    # else
-    #   render 'edit'
-    # end
+    #render 'show'
+    if @grading_standard.update_attributes(grading_standard_params)
+      flash[:success] = "Grading scheme has been updated"
+      redirect_to grading_standards_path
+    else
+      render 'edit'
+    end
   end
 
   def destroy
