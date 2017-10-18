@@ -56,7 +56,7 @@ class ApiOauthController < ApplicationController
   end
 
   def logout
-    uri = URI::HTTP.build(host: BASE_URL, path: '/login/oauth2/token')
+    uri = URI::HTTP.build(host: BASE_URL, path: '/api/v1/login/oauth2/token')
     params = {:_method      => 'DELETE',
               :access_token => current_user.access_token,
     }
