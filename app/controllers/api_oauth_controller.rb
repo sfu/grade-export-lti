@@ -14,14 +14,19 @@ class ApiOauthController < ApplicationController
   end
 
   def get_token
-    uri = URI::HTTP.build(host: BASE_URL, path: '/login/oauth2/token')
-    params = {
+    uri = URI::HTTPS.build(host: BASE_URL, path: '/login/oauth2/token')
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless Rails.env.production?
+    req = Net::HTTP::Post.new(uri.request_uri)
+    req.add_field('Content-Type', 'application/json')
+    req.body = {
         :client_id      => Rails.application.secrets.api_client_id,
         :client_secret  => Rails.application.secrets.api_client_secret,
         :redirect_uri   => GET_TOKEN_ENDPOINT,
         :code           => request.query_parameters['code'],
-    }
-    response = Net::HTTP.post_form(uri, params)
+    }.to_json
+    response = http.request(req)
     json_response = JSON.parse(response.body)
 
     current_user.update_columns(
@@ -35,14 +40,19 @@ class ApiOauthController < ApplicationController
   end
 
   def refresh_token
-    uri = URI::HTTP.build(host: BASE_URL, path: '/login/oauth2/token')
-    params = {
+    uri = URI::HTTPS.build(host: BASE_URL, path: '/login/oauth2/token')
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless Rails.env.production?
+    request = Net::HTTP::Post.new(uri.request_uri)
+    request.add_field('Content-Type', 'application/json')
+    request.body = {
         :grant_type     => 'refresh_token',
         :client_id      => Rails.application.secrets.api_client_id,
         :client_secret  => Rails.application.secrets.api_client_secret,
         :refresh_token  => current_user.refresh_token,
-    }
-    response = Net::HTTP.post_form(uri, params)
+    }.to_json
+    response = http.request(request)
     json_response = JSON.parse(response.body)
 
     if json_response['error'] == 'invalid_request'

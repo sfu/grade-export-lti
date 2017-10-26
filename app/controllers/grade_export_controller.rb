@@ -48,8 +48,10 @@ class GradeExportController < ApplicationController
 
   # Includes the access_token in the Request Header - better practice according to Canvas LMS documentation
   def response_for(path)
-    uri = URI::HTTP.build(host: BASE_URL, path: path)
+    uri = URI::HTTPS.build(host: BASE_URL, path: path)
     http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless Rails.env.production?
     request = Net::HTTP::Get.new(uri.request_uri)
     logger.debug "#{request}"
     request['Authorization'] = "Bearer #{current_user.access_token}"
@@ -62,8 +64,10 @@ class GradeExportController < ApplicationController
   end
 
   def response_for_skip_redirect(path, skip_redirect)
-    uri = URI::HTTP.build(host: BASE_URL, path: path)
+    uri = URI::HTTPS.build(host: BASE_URL, path: path)
     http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless Rails.env.production?
     request = Net::HTTP::Get.new(uri.request_uri)
     logger.debug "#{request}"
     request['Authorization'] = "Bearer #{current_user.access_token}"

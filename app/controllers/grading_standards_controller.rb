@@ -47,49 +47,24 @@ class GradingStandardsController < ApplicationController
   end
 
   def post_grading_standard
-    uri = URI::HTTP.build(host: BASE_URL, path: "/api/v1/courses/3/grading_standards")
-    params = {
-        :title     => 'new gs 1004',
-        :access_token => current_user.access_token,
-        'grading_scheme_entry[][name]' => 'A+',
-        'grading_scheme_entry[][value]' => '95',
-        'grading_scheme_entry[][name]' => 'A',
-        'grading_scheme_entry[][value]' => '90',
-        'grading_scheme_entry[][name]' => 'A-',
-        'grading_scheme_entry[][value]' => '85',
-        'grading_scheme_entry[][name]' => 'B+',
-        'grading_scheme_entry[][value]' => '80',
-        'grading_scheme_entry[][name]' => 'B',
-        'grading_scheme_entry[][value]' => '75',
-        'grading_scheme_entry[][name]' => 'B-',
-        'grading_scheme_entry[][value]' => '70',
-        'grading_scheme_entry[][name]' => 'C+',
-        'grading_scheme_entry[][value]' => '65',
-        'grading_scheme_entry[][name]' => 'C',
-        'grading_scheme_entry[][value]' => '60',
-        'grading_scheme_entry[][name]' => 'C-',
-        'grading_scheme_entry[][value]' => '55'
-    }
-    response = Net::HTTP.post_form(uri, params)
-    json_response = JSON.parse(response.body)
-    render plain: json_response
+    @grading_standard = current_user.grading_standards.find(16)
+    title = URI.escape(@grading_standard[:title])
+    param_string = "title=#{title}&"
 
-    # uri = URI::HTTP.build(host: BASE_URL, path: "/api/v1/courses/#{session[:course_id]}/grading_standards")
-    # http = Net::HTTP.new(uri.host, uri.port)
-    # request = Net::HTTP::Post.new(uri.request_uri, content_type: 'json')
-    # logger.debug "#{request}"
-    # request['Authorization'] = "Bearer #{current_user.access_token}"
-    # request.body = {
-    #     'title':'Some other GS',
-    #     'grading_scheme_entry[][name]':'',
-    #     'grading_scheme_entry[][value]': '',
-    # }.to_json
-    # response = http.request(request)
-    # if response.code == NOT_AUTHORIZED
-    #   redirect_to refresh_token_path
-    # else
-    #   render plain: "#{JSON.parse(response.body)}"
-    # end
+    @grading_standard.grading_scheme.each do |gs|
+      param_string << "grading_scheme_entry[][name]=#{gs.name}&grading_scheme_entry[][value]=#{gs.percentage}&"
+    end
+
+    uri = URI::HTTPS.build(host: BASE_URL, path: "/api/v1/courses/3/grading_standards", query: param_string)
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless Rails.env.production?
+    request = Net::HTTP::Post.new(uri)
+    request['Authorization'] = "Bearer #{current_user.access_token}"
+    response = http.request(request)
+
+    flash[:success] = "Grading scheme has been successfully added to the course"
+    redirect_to course_path(session[:course_id])
   end
 
   private
