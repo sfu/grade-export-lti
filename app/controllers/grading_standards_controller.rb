@@ -47,7 +47,7 @@ class GradingStandardsController < ApplicationController
   end
 
   def post_grading_standard
-    @grading_standard = current_user.grading_standards.find(16)
+    @grading_standard = current_user.grading_standards.find(98)
     title = URI.escape(@grading_standard[:title])
     param_string = "title=#{title}&"
 
