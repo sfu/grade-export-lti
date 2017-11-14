@@ -11,20 +11,20 @@
       <%= image_tag("course_cover.svg", :alt => "Course Cover", :style => "width:100%") %>
       <!--<img src="img_fjords.jpg" alt="Norway" style="width:100%">-->
       <div class="w3-container w3-margin-top">
-        <p> <%= @course['name'] %> </p>
+        <p> <%= @course['course_code'] %> </p>
       </div>
       <div class="w3-row">
         <div class="w3-quarter w3-center">
           <h3></h3>
           <!--<span class="glyphicon glyphicon-new-window course-icon" aria-hidden="true"></span>-->
-          <%= link_to '<span class="glyphicon glyphicon-new-window course-icon" title="View Grades" aria-hidden="true"></span>'.html_safe, grades_path(@course['id']) %>
+          <%= link_to '<span class="glyphicon glyphicon-new-window course-icon icon-hover-color" title="View Grades" aria-hidden="true"></span>'.html_safe, grades_path(@course['id']) %>
         </div>
         <div class="w3-quarter w3-center">
           <h3></h3>
           <% if @grading_standard.any? %>
-              <%= link_to '<span class="glyphicon glyphicon-save course-icon" title="Download SIS compatible grades file" aria-hidden="true"></span>'.html_safe, export_path(@course['id'], format: :xlsx) %>
+              <%= link_to '<span class="glyphicon glyphicon-save course-icon icon-hover-color" title="Download SIS compatible grades file" aria-hidden="true"></span>'.html_safe, export_path(@course['id'], format: :xlsx) %>
           <% else %>
-              <%= link_to '<span class="glyphicon glyphicon-save course-icon" title="Download SIS compatible grades file" aria-hidden="true"></span>'.html_safe, "#myModal", "data-toggle" => "modal" %>
+              <%= link_to '<span class="glyphicon glyphicon-save course-icon icon-hover-color" title="Download SIS compatible grades file" aria-hidden="true"></span>'.html_safe, "#myModal", "data-toggle" => "modal" %>
           <% end %>
         </div>
       </div>
@@ -47,7 +47,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <%= link_to '<span class="glyphicon glyphicon-plus"></span> Apply'.html_safe, apply_grading_scheme_path(@course['id']), method: :post, class: "btn btn-primary" %>
+        <%= link_to '<span class="glyphicon glyphicon-th"></span> Manage Grading Standards'.html_safe, grading_standards_path, class: "btn btn-primary" %>
+        <%# link_to '<span class="glyphicon glyphicon-plus"></span> Apply'.html_safe, apply_grading_scheme_path(@course['id']), method: :post, class: "btn btn-primary" %>
       </div>
     </div>
   </div>

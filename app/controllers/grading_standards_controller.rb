@@ -47,7 +47,7 @@ class GradingStandardsController < ApplicationController
   end
 
   def post_grading_standard
-    @grading_standard = current_user.grading_standards.find(98)
+    @grading_standard = current_user.grading_standards.find(params[:id])
     title = URI.escape(@grading_standard[:title])
     param_string = "title=#{title}&"
 
@@ -55,7 +55,7 @@ class GradingStandardsController < ApplicationController
       param_string << "grading_scheme_entry[][name]=#{gs.name}&grading_scheme_entry[][value]=#{gs.percentage}&"
     end
 
-    uri = URI::HTTPS.build(host: BASE_URL, path: "/api/v1/courses/3/grading_standards", query: param_string)
+    uri = URI::HTTPS.build(host: BASE_URL, path: "/api/v1/courses/#{session[:course_id]}/grading_standards", query: param_string)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless Rails.env.production?
@@ -64,7 +64,7 @@ class GradingStandardsController < ApplicationController
     response = http.request(request)
 
     flash[:success] = "Grading scheme has been successfully added to the course"
-    redirect_to course_path(session[:course_id])
+    redirect_to grading_standards_path #course_path(session[:course_id])
   end
 
   private

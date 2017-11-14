@@ -35,7 +35,7 @@ Rails.application.routes.draw do
 
   get     '/all_grades/:id',       to: 'grade_export#all_grades'
 
-  post    '/apply_grading_scheme', to: 'grading_standards#post_grading_standard', as: 'apply_grading_scheme'
+  post    '/apply_grading_scheme/:id', to: 'grading_standards#post_grading_standard', as: 'apply_grading_scheme'
 
   #resources :users
   #resources :grading_standards

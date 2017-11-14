@@ -229,4 +229,14 @@ input {
   }
 }
 
+.add-icon-margin {
+  margin-left: 20px;
+}
+
+.icon-hover-color {
+  &:hover {
+    color: #337ab7;
+  }
+}
+
 
