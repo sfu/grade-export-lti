@@ -1,0 +1,46 @@
+<% provide(:title, "Edit Grading Standard") %>
+
+<div class="container">
+  <h3>Update Grading Standard</h3>
+  <hr>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <%= form_for @grading_standard, :html => {:class => 'form-horizontal'} do |f| %>
+          <%= render 'shared/grading_error_messages' %>
+
+          <div class="col-md-12">
+            <div class="form-group">
+              <%= f.label :title, class: 'control-label col-sm-3' %>
+              <div class="col-sm-9">
+                <%= f.text_field :title, class: 'form-control', autofocus: true %>
+              </div>
+            </div>
+          </div>
+
+          <%= f.fields_for :grading_scheme do |sf| %>
+              <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                  <%= sf.label :name, class: 'control-label col-sm-6' %>
+                  <div class="col-sm-6">
+                    <%= sf.text_field :name, :readonly => true, class: 'form-control' %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                  <%= sf.label :percentage, class: 'control-label col-sm-6' %>
+                  <div class="col-sm-6">
+                    <%= sf.text_field :percentage, class: 'form-control' %>
+                  </div>
+                </div>
+              </div>
+          <% end %>
+          <hr>
+          <div class="col-md-12">
+            <%= f.submit "Save changes", class: "btn btn-primary btn-submit pull-right" %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>

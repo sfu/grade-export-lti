@@ -1,0 +1,12 @@
+<% if @grading_standard.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger">
+        The form contains <%= pluralize(@grading_standard.errors.count, "error") %>.
+      </div>
+      <ul>
+        <% @grading_standard.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>

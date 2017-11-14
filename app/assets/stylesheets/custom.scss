@@ -201,3 +201,32 @@ input {
   color: #6c8a9f;
   padding-bottom: 16px;
 }
+
+.panel-default {
+  .panel-heading {
+    background-color: white;
+  }
+}
+
+.action-icon {
+  color: #777777;
+}
+
+.btn-submit {
+  width: 30%;
+}
+
+#delete {
+  margin-left: 20px;
+  &:hover {
+    color: #d9534f;
+  }
+}
+
+#edit {
+  &:hover {
+    color: #337ab7;
+  }
+}
+
+

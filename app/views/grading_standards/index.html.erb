@@ -1,0 +1,41 @@
+<% provide(:title, 'Grading Schemes') %>
+
+<div class="container">
+  <h3>Your Grading Standards:</h3>
+  <hr>
+  <div class="row">
+    <% @grading_standards.each do |grading_standard| %>
+        <div class="col-md-6">
+          <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+              <%= grading_standard[:title] %>
+              <%= link_to '<span id="delete" class="glyphicon glyphicon-trash pull-right action-icon" title="Delete grading scheme"></span>'.html_safe, grading_standard_path(grading_standard[:id]), method: :delete, format: :html, data: { confirm: "Are you sure you want to delete #{grading_standard[:title]}?"} %>
+              <%= link_to '<span id="edit" class="glyphicon glyphicon-pencil pull-right action-icon" title="Edit grading scheme"></span>'.html_safe, edit_grading_standard_path(grading_standard[:id]) %>
+              <!--<a href="#"><span id="delete" class="glyphicon glyphicon-remove pull-right action-icon"></span></a>-->
+              <!--<a href="#"><span id="edit" class="glyphicon glyphicon-pencil pull-right action-icon" title="Edit grading scheme"></span></a>-->
+            </div>
+            <div class="panel-body">
+              <p>
+                <% grading_standard.grading_scheme.each_with_index do |grading_scheme, i| %>
+                    <div class="row">
+                      <div class="col-xs-3 col-sm-3"><%= grading_scheme.name %></div>
+                      <div class="col-xs-3 col-sm-3"> <%= i == 0 ? ' ' : '< ' %> <%= i == 0 ? '100' : grading_standard.grading_scheme[i-1].percentage %>%</div>
+                      <div class="col-xs-3 col-sm-3 text-center">to</div>
+                      <div class="col-xs-3 col-sm-3"><%= grading_scheme.percentage %>%</div>
+                    </div>
+                    <!--<br/><%# grading_scheme.name %> : <%# i == 0 ? '100' : grading_standard.grading_scheme[i-1].percentage %>% to <%# grading_scheme.percentage %>%-->
+                <% end %>
+              </p>
+            </div>
+          </div>
+        </div>
+    <% end %>
+  </div>
+
+  <%# link_to "Add New", new_grading_standard_path, class: "btn btn-lg btn-default" %>
+
+  <%= link_to '<span class="glyphicon glyphicon-plus"></span> Add New'.html_safe, new_grading_standard_path, class: "btn btn-lg btn-default" %>
+
+</div>
+

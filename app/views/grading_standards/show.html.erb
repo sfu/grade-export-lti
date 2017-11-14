@@ -1,0 +1,8 @@
+<% provide(:title, 'Grading Scheme') %>
+
+<div class="w3-cell-row">
+  <strong> <%= @grading_standard[:title] %> </strong>
+  <% @grading_standard.grading_scheme.each do |gs| %>
+      <br/><%= gs.name %> : <%= gs.percentage %>
+  <% end %>
+</div>
