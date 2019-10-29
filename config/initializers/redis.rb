@@ -1,1 +1,1 @@
-$redis = Redis::Namespace.new("site_point", :redis => Redis.new(:password => "rezzredisserver"))
+$redis = Redis::Namespace.new("site_point", :redis => Redis.new(url: Rails.configuration.redis['uri']))

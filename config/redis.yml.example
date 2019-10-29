@@ -1,5 +1,5 @@
 default: &default
-  url: redis://localhost:6379
+  uri: redis://localhost:6379
 
 development:
   <<: *default
