@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+    links:
+      - redis
+    volumes:
+      - .:/usr/src/app
+      - bundle_path:/bundle
+      - log:/usr/src/app/log
+      - tmp:/usr/src/app/tmp
+    environment:
+      RAILS_ENV: development
+      BUNDLE_PATH: /bundle
+
+  redis:
+    image: redis:alpine
+
+volumes:
+  bundle_path: {}
+  log: {}
+  tmp: {}

@@ -27,3 +27,7 @@
 
 # Ignore rubyMine folder
 .idea/
+
+# Ignore docker local config
+.env
+docker-compose.local.yml
