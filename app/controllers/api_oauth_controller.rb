@@ -2,12 +2,17 @@ class ApiOauthController < ApplicationController
 
   before_action :authorize
 
+  def redirect_uri
+    dc = Rails.configuration.domain
+    scheme = dc['secure'] ? 'https' : 'http'
+    "#{scheme}://#{dc['domain']}/get_token"
+  end
+
   def start
     parameters = {
         client_id: Rails.application.secrets.api_client_id,
         response_type: 'code',
-        redirect_uri: GET_TOKEN_ENDPOINT,
-        # scope:'/auth/userinfo'
+        redirect_uri: redirect_uri,
     }
     uri = URI.parse("#{BASE_URL}/login/oauth2/auth?#{parameters.to_query}").to_s
     redirect_to uri
@@ -23,7 +28,7 @@ class ApiOauthController < ApplicationController
     req.body = {
         :client_id      => Rails.application.secrets.api_client_id,
         :client_secret  => Rails.application.secrets.api_client_secret,
-        :redirect_uri   => GET_TOKEN_ENDPOINT,
+        :redirect_uri   => redirect_uri,
         :code           => request.query_parameters['code'],
     }.to_json
     response = http.request(req)
