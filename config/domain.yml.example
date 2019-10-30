@@ -1,0 +1,13 @@
+# the domain is used when building URLs that reference the LTI, such as the OAuth2 redirect_uri
+
+production:
+  domain: 'grade-export.docker'
+  secure: false
+  
+test:
+  domain: localhost
+
+development:
+  domain: 'grade-export.docker'
+  secure: false
+  
