@@ -85,7 +85,7 @@ class LtiController < ApplicationController
   def login_user(user, course, message)
     session[:user_id] = user.id
     session[:course_id] = course
-    redirect_to user
+    redirect_to "/#{course}"
   end
 
 end
