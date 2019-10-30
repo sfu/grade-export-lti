@@ -9,14 +9,14 @@ class ApiOauthController < ApplicationController
         redirect_uri: GET_TOKEN_ENDPOINT,
         # scope:'/auth/userinfo'
     }
-    uri = URI::HTTP.build(host: BASE_URL, path: '/login/oauth2/auth', query: parameters.to_query).to_s
+    uri = URI.parse("#{BASE_URL}/login/oauth2/auth?#{parameters.to_query}").to_s
     redirect_to uri
   end
 
   def get_token
-    uri = URI::HTTPS.build(host: BASE_URL, path: '/login/oauth2/token')
+    uri = URI.parse("#{BASE_URL}/login/oauth2/token")
     http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
+    true if uri.scheme == 'https'
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless Rails.env.production?
     req = Net::HTTP::Post.new(uri.request_uri)
     req.add_field('Content-Type', 'application/json')
@@ -40,9 +40,9 @@ class ApiOauthController < ApplicationController
   end
 
   def refresh_token
-    uri = URI::HTTPS.build(host: BASE_URL, path: '/login/oauth2/token')
+    uri = URI.parse("#{BASE_URL}/login/oauth2/token")
     http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
+    http.use_ssl = true if uri.scheme == 'https'
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless Rails.env.production?
     request = Net::HTTP::Post.new(uri.request_uri)
     request.add_field('Content-Type', 'application/json')

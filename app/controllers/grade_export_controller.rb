@@ -48,15 +48,14 @@ class GradeExportController < ApplicationController
 
   # Includes the access_token in the Request Header - better practice according to Canvas LMS documentation
   def response_for(path)
-    uri = URI::HTTPS.build(host: BASE_URL, path: path)
+    uri = URI.parse("#{BASE_URL}#{path}")
     http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
+    http.use_ssl = true if uri.scheme == 'https'
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless Rails.env.production?
     request = Net::HTTP::Get.new(uri.request_uri)
-    logger.debug "#{request}"
     request['Authorization'] = "Bearer #{current_user.access_token}"
     response = http.request(request)
-    if response.code == NOT_AUTHORIZED
+    if response.code == Rack::Utils.status_code(:unauthorized).to_s
       redirect_to refresh_token_path
     else
       JSON.parse(response.body)
@@ -64,15 +63,17 @@ class GradeExportController < ApplicationController
   end
 
   def response_for_skip_redirect(path, skip_redirect)
-    uri = URI::HTTPS.build(host: BASE_URL, path: path)
+    uri = URI.parse("#{BASE_URL}#{path}")
     http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
+    http.use_ssl = true if uri.scheme == 'https'
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless Rails.env.production?
     request = Net::HTTP::Get.new(uri.request_uri)
-    logger.debug "#{request}"
     request['Authorization'] = "Bearer #{current_user.access_token}"
     response = http.request(request)
-    if response.code == NOT_AUTHORIZED && !skip_redirect
+    logger.debug "*** #{response.inspect}"
+    logger.debug "#{response.code.class}"
+
+    if response.code == Rack::Utils.status_code(:unauthorized).to_s && !skip_redirect
       redirect_to refresh_token_path
     else
       JSON.parse(response.body)
