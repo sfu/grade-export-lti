@@ -7,13 +7,13 @@ class LtiController < ApplicationController
   end
 
   def lti_post
-    nonce_isvalid     = valid_nonce?(request.request_parameters['oauth_nonce'], request.request_parameters['oauth_timestamp'])
+    nonce_isvalid = valid_nonce?(request.request_parameters['oauth_nonce'], request.request_parameters['oauth_timestamp'])
     timestamp_isvalid = valid_timeStamp?(request.request_parameters['oauth_timestamp'])
     signature_isvalid = valid_lti_signature?(request.url, request.request_parameters, Rails.application.secrets.lti_secret)
 
-    course_id         =  request.request_parameters['custom_canvas_course_id']
-
+    course_id =  request.request_parameters['custom_canvas_course_id']
     if nonce_isvalid && timestamp_isvalid && signature_isvalid
+      session[:canvas_url_base] = request.request_parameters['custom_canvas_url_base']
       @user = user_exists?(request.request_parameters['lis_person_contact_email_primary'])
 
       if @user
@@ -31,7 +31,6 @@ class LtiController < ApplicationController
           flash.now[:danger] = 'Oooops!..... Could not create user!'
           logger.debug @user.errors.full_messages
           render 'shared/error'
-          #render 'users/new'
         end
       end
     else
