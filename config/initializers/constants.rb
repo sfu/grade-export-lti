@@ -1,5 +1,3 @@
-BASE_URL           = 'web.canvaslms.docker'
-
 module CourseDetail
   TERM    = 0
   SUBJECT = 1

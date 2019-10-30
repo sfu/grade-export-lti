@@ -55,7 +55,7 @@ class GradingStandardsController < ApplicationController
       param_string << "grading_scheme_entry[][name]=#{gs.name}&grading_scheme_entry[][value]=#{gs.percentage}&"
     end
 
-    uri = URI::HTTPS.build(host: BASE_URL, path: "/api/v1/courses/#{session[:course_id]}/grading_standards", query: param_string)
+    uri = URI::HTTPS.build(host: session[:canvas_url_base], path: "/api/v1/courses/#{session[:course_id]}/grading_standards", query: param_string)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless Rails.env.production?

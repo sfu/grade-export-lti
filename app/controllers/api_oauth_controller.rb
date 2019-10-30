@@ -14,12 +14,12 @@ class ApiOauthController < ApplicationController
         response_type: 'code',
         redirect_uri: redirect_uri,
     }
-    uri = URI.parse("#{BASE_URL}/login/oauth2/auth?#{parameters.to_query}").to_s
+    uri = URI.parse("#{session[:canvas_url_base]}/login/oauth2/auth?#{parameters.to_query}").to_s
     redirect_to uri
   end
 
   def get_token
-    uri = URI.parse("#{BASE_URL}/login/oauth2/token")
+    uri = URI.parse("#{session[:canvas_url_base]}/login/oauth2/token")
     http = Net::HTTP.new(uri.host, uri.port)
     true if uri.scheme == 'https'
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless Rails.env.production?
@@ -45,7 +45,7 @@ class ApiOauthController < ApplicationController
   end
 
   def refresh_token
-    uri = URI.parse("#{BASE_URL}/login/oauth2/token")
+    uri = URI.parse("#{session[:canvas_url_base]}/login/oauth2/token")
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true if uri.scheme == 'https'
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless Rails.env.production?
@@ -71,7 +71,7 @@ class ApiOauthController < ApplicationController
   end
 
   def logout
-    uri = URI::HTTP.build(host: BASE_URL, path: '/api/v1/login/oauth2/token')
+    uri = URI::HTTP.build(host: session[:canvas_url_base], path: '/api/v1/login/oauth2/token')
     params = {:_method      => 'DELETE',
               :access_token => current_user.access_token,
     }
