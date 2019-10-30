@@ -3,7 +3,7 @@ class LtiController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def lti_get
-    flash.now[:danger] = 'Opssss! This is not an LTI launch.'
+    render plain: "Grade Export LTI"
   end
 
   def lti_post
