@@ -17,7 +17,7 @@ class LtiController < ApplicationController
       @user = user_exists?(request.request_parameters['lis_person_contact_email_primary'])
 
       if @user
-        login_user(@user, course_id, "Hello #{@user.name}, Welcome back to the Grade Export App!")
+        login_user(@user, course_id, "Hello #{@user.name}")
       else
         random_secure_string = SecureRandom.hex(10)
         @request_params = request.request_parameters
@@ -26,9 +26,9 @@ class LtiController < ApplicationController
                          password: random_secure_string,
                          password_confirmation: random_secure_string)
         if @user.save
-          login_user(@user, course_id ,"Hello #{@user.name}, Welcome to the Grade Export App!")
+          login_user(@user, course_id ,"Hello #{@user.name}")
         else
-          flash.now[:danger] = 'Oooops!..... Could not create user!'
+          flash.now[:danger] = 'Could not create user'
           logger.debug @user.errors.full_messages
           render 'shared/error'
         end
@@ -85,7 +85,6 @@ class LtiController < ApplicationController
   def login_user(user, course, message)
     session[:user_id] = user.id
     session[:course_id] = course
-    flash[:success] = message
     redirect_to user
   end
 
