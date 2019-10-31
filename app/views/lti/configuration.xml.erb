@@ -8,16 +8,25 @@
     http://www.imsglobal.org/xsd/imsbasiclti_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imsbasiclti_v1p0.xsd
     http://www.imsglobal.org/xsd/imslticm_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticm_v1p0.xsd
     http://www.imsglobal.org/xsd/imslticp_v1p0 http://www.imsglobal.org/xsd/lti/ltiv1p0/imslticp_v1p0.xsd">
-    <blti:launch_url>http://0.0.0.0:3001/lti</blti:launch_url>
-    <blti:title>GradeExport</blti:title>
-    <blti:description>This App helps instructors export student final grades to SIS with ease!</blti:description>
+    <blti:title>SIMS Grade Export</blti:title>
+    <blti:description>Export Canvas Grades to SIMS-compatible Excel File</blti:description>
+    <blti:icon></blti:icon>
+    <blti:launch_url>https://grade-export-lti.its.sfu.ca/lti</blti:launch_url>
+      <blti:custom>
+        <lticm:property name="canvas_url_base">$Canvas.api.baseUrl</lticm:property>
+      </blti:custom>
     <blti:extensions platform="canvas.instructure.com">
+      <lticm:property name="tool_id">ca_sfu_its_grade_export_lti</lticm:property>
       <lticm:property name="privacy_level">public</lticm:property>
-      <lticm:property name="domain">http://0.0.0.0:3001</lticm:property>
+      <lticm:property name="domain">grade-export-lti.its.sfu.ca</lticm:property>
       <lticm:options name="course_navigation">
+        <lticm:property name="url">https://grade-export-lti.its.sfu.ca/lti</lticm:property>
+        <lticm:property name="text">SIMS Grade Export</lticm:property>
         <lticm:property name="visibility">admins</lticm:property>
         <lticm:property name="default">disabled</lticm:property>
         <lticm:property name="enabled">true</lticm:property>
       </lticm:options>
     </blti:extensions>
-</cartridge_basiclti_link>
+    <cartridge_bundle identifierref="BLTI001_Bundle"/>
+    <cartridge_icon identifierref="BLTI001_Icon"/>
+</cartridge_basiclti_link>  
