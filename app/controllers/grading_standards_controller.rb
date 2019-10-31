@@ -1,3 +1,5 @@
+require 'net/http'
+
 class GradingStandardsController < ApplicationController
   before_action :authorize
 

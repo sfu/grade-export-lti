@@ -1,3 +1,5 @@
+require 'net/http'
+
 class ApiOauthController < ApplicationController
 
   before_action :authorize
@@ -32,6 +34,7 @@ class ApiOauthController < ApplicationController
         :code           => request.query_parameters['code'],
     }.to_json
     response = http.request(req)
+    
     json_response = JSON.parse(response.body)
 
     current_user.update_columns(

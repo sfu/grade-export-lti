@@ -1,3 +1,5 @@
+require 'net/http'
+
 class GradeExportController < ApplicationController
   before_action :authorize
 
