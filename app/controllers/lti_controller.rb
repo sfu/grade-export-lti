@@ -29,13 +29,11 @@ class LtiController < ApplicationController
           login_user(@user, course_id ,"Hello #{@user.name}")
         else
           flash.now[:danger] = 'Could not create user'
-          logger.debug @user.errors.full_messages
           render 'shared/error'
         end
       end
     else
       flash.now[:danger] = 'LTI Validation Failed'
-      logger.debug "nonce is valid? #{nonce_isvalid}, timestamp is valid? #{timestamp_isvalid}, signature is valid? #{signature_isvalid}"
       render 'shared/error'
     end
 
@@ -59,7 +57,6 @@ class LtiController < ApplicationController
         false
       end
     rescue => e
-      logger.debug "#{e.message}"
       false
     end
   end

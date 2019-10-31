@@ -14,7 +14,6 @@ module GradeExportHelper
           return course_details[CourseDetail::SECTION]
       end
     rescue => e
-      logger.debug "sis_course_id is null or has wrong format sis_course_id: #{sis_section_id}"
       flash.now[:danger] = 'sis_course_id is null or has wrong format, as a result, course and section fields will not be displayed'
       render template: 'shared/error'
     end

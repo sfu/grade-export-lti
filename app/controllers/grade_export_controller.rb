@@ -72,8 +72,6 @@ class GradeExportController < ApplicationController
     request = Net::HTTP::Get.new(uri.request_uri)
     request['Authorization'] = "Bearer #{current_user.access_token}"
     response = http.request(request)
-    logger.debug "*** #{response.inspect}"
-    logger.debug "#{response.code.class}"
 
     if response.code == Rack::Utils.status_code(:unauthorized).to_s && !skip_redirect
       redirect_to refresh_token_path
