@@ -21,7 +21,7 @@ class ApiOauthController < ApplicationController
   def get_token
     uri = URI.parse("#{session[:canvas_url_base]}/login/oauth2/token")
     http = Net::HTTP.new(uri.host, uri.port)
-    true if uri.scheme == 'https'
+    http.use_ssl = true if uri.scheme == 'https'
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless Rails.env.production?
     req = Net::HTTP::Post.new(uri.request_uri)
     req.add_field('Content-Type', 'application/json')
