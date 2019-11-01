@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root 'static_pages#home'
+  root 'lti#lti_get'
 
   resources :grading_standards
   resources :users
