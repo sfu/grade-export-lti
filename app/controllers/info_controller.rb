@@ -1,6 +1,8 @@
 class InfoController < ApplicationController
 
   def health_check
+    # check that we have a valid database connection
+    User.connection.select_value("SELECT 1")
     respond_to do |format|
       format.html { render plain: 'ok'}
       format.json { render json: {
