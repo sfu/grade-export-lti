@@ -33,3 +33,5 @@
 docker-compose.local.yml
 
 config/*.yml
+
+RELEASE
