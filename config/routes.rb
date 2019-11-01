@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   root 'lti#lti_get'
+  get     '/health_check', to: 'info#health_check'
 
   resources :grading_standards
   resources :users
