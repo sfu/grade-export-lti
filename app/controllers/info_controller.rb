@@ -7,7 +7,8 @@ class InfoController < ApplicationController
       format.html { render plain: 'ok'}
       format.json { render json: {
         status: 'ok',
-        release: release
+        release: release,
+        revision: revision
       }}
     end
   end
@@ -15,8 +16,19 @@ class InfoController < ApplicationController
   private
   def release
     return @release if defined?(@release)
-    @revision = if File.file?(Rails.root+"RELEASE")
-      File.readlines(Rails.root+"RELEASE").first.try(:strip)
+    release_file = "#{Rails.root}/RELEASE"
+    @release = if File.file?(release_file)
+      File.readlines(release_file).first.try(:strip)
+    else
+      nil
+    end
+  end
+
+  def revision
+    return @revision if defined?(@revision)
+    rev_file = "#{Rails.root}/REVISION"
+    @revision = if File.file?(rev_file)
+      File.readlines(rev_file).first.try(:strip)
     else
       nil
     end
