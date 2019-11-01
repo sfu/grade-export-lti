@@ -5,18 +5,6 @@ Rails.application.routes.draw do
   resources :grading_standards
   resources :users
 
-  get     '/help',                 to: 'static_pages#help'
-  get     '/about',                to: 'static_pages#about'
-  get     '/contact',              to: 'static_pages#contact'
-
-  get     '/signup',               to: 'users#new'
-  post    '/signup',               to: 'users#create'
-
-
-  get     '/login',                to: 'sessions#new'
-  post    '/login',                to: 'sessions#create'
-  delete  '/logout',               to: 'sessions#destroy'
-
   get     '/lti',                  to: 'lti#lti_get'
   post    '/lti',                  to: 'lti#lti_post'
   get     '/lti/config',           to: 'lti#configuration', defaults: { format: 'xml' }
@@ -27,8 +15,6 @@ Rails.application.routes.draw do
 
   get     '/refresh_token',        to: 'api_oauth#refresh_token'
 
-
- # get     '/courses',         to: 'grade_export#courses'
   get     '/:id',                  to: 'grade_export#course', as: 'course'
   get     '/courses/:id',          to: 'grade_export#grades', as: 'grades'
   get     '/export/:id',           to: 'grade_export#export', as: 'export'
@@ -37,6 +23,4 @@ Rails.application.routes.draw do
 
   post    '/apply_grading_scheme/:id', to: 'grading_standards#post_grading_standard', as: 'apply_grading_scheme'
 
-  #resources :users
-  #resources :grading_standards
 end
