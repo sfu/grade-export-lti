@@ -33,7 +33,7 @@ gem 'jbuilder', '~> 2.5'
 
 
 gem 'bootstrap-sass', '3.3.7'
-gem 'jquery-rails',   '4.3.1'
+gem 'jquery-rails',   '4.4.0'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt',         '3.1.11'
